@@ -175,21 +175,26 @@
         }
       });
       
-      // Auto-scroll thumbnail strip to keep active slide visible
+      // Steam-like auto-scroll: shift to make current slide first when it's outside visible area
       const activeThumbnail = thumbnails[currentSlide];
       if (activeThumbnail) {
+        const stripScrollLeft = thumbnailStrip.scrollLeft;
         const stripWidth = thumbnailStrip.offsetWidth;
-        const thumbnailWidth = activeThumbnail.offsetWidth;
         const thumbnailLeft = activeThumbnail.offsetLeft;
-        const gap = 12; // 3 * 4px (gap-3 in Tailwind)
+        const thumbnailWidth = activeThumbnail.offsetWidth;
         
-        // Calculate scroll position to center the active thumbnail with context
-        const scrollPosition = thumbnailLeft - (stripWidth / 2) + (thumbnailWidth / 2);
+        const thumbnailRight = thumbnailLeft + thumbnailWidth;
+        const visibleRight = stripScrollLeft + stripWidth;
         
-        thumbnailStrip.scrollTo({
-          left: scrollPosition,
-          behavior: 'smooth'
-        });
+        // Check if thumbnail is outside visible area
+        if (thumbnailLeft < stripScrollLeft || thumbnailRight > visibleRight) {
+          // Thumbnail is outside visible area - scroll to make it the first visible slide
+          thumbnailStrip.scrollTo({
+            left: thumbnailLeft,
+            behavior: 'smooth'
+          });
+        }
+        // If thumbnail is already visible, don't scroll
       }
     }
 
