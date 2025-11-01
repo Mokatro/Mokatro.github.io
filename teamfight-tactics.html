@@ -23,6 +23,10 @@
     .scrollbar-thin::-webkit-scrollbar-thumb:hover {
       background: #06b6d4;
     }
+    
+    #thumbnail-strip {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
 <body>
@@ -132,6 +136,17 @@
       { id: 6, url: '/slides/teamfight-tactics-slide-6.png', title: 'Slide 6' },
       { id: 7, url: '/slides/teamfight-tactics-slide-7.png', title: 'Slide 7' },
       { id: 8, url: '/slides/teamfight-tactics-slide-8.png', title: 'Slide 8' },
+      { id: 9, url: '/slides/teamfight-tactics-slide-9.png', title: 'Slide 9' },
+      { id: 10, url: '/slides/teamfight-tactics-slide-10.png', title: 'Slide 10' },
+      { id: 11, url: '/slides/teamfight-tactics-slide-11.png', title: 'Slide 11' },
+      { id: 12, url: '/slides/teamfight-tactics-slide-12.png', title: 'Slide 12' },
+      { id: 13, url: '/slides/teamfight-tactics-slide-13.png', title: 'Slide 13' },
+      { id: 14, url: '/slides/teamfight-tactics-slide-14.png', title: 'Slide 14' },
+      { id: 15, url: '/slides/teamfight-tactics-slide-15.png', title: 'Slide 15' },
+      { id: 16, url: '/slides/teamfight-tactics-slide-16.png', title: 'Slide 16' },
+      { id: 17, url: '/slides/teamfight-tactics-slide-17.png', title: 'Slide 17' },
+      { id: 18, url: '/slides/teamfight-tactics-slide-18.png', title: 'Slide 18' },
+      { id: 19, url: '/slides/teamfight-tactics-slide-19.png', title: 'Slide 19' },
       // Add more slides as needed - no other code changes required
     ];
 
@@ -159,6 +174,23 @@
           thumb.className = 'thumbnail-btn flex-shrink-0 relative rounded-lg overflow-hidden transition-all duration-200 ring-2 ring-gray-600 hover:ring-cyan-500 opacity-70 hover:opacity-100';
         }
       });
+      
+      // Auto-scroll thumbnail strip to keep active slide visible
+      const activeThumbnail = thumbnails[currentSlide];
+      if (activeThumbnail) {
+        const stripWidth = thumbnailStrip.offsetWidth;
+        const thumbnailWidth = activeThumbnail.offsetWidth;
+        const thumbnailLeft = activeThumbnail.offsetLeft;
+        const gap = 12; // 3 * 4px (gap-3 in Tailwind)
+        
+        // Calculate scroll position to center the active thumbnail with context
+        const scrollPosition = thumbnailLeft - (stripWidth / 2) + (thumbnailWidth / 2);
+        
+        thumbnailStrip.scrollTo({
+          left: scrollPosition,
+          behavior: 'smooth'
+        });
+      }
     }
 
     // Navigate to specific slide
