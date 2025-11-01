@@ -178,19 +178,22 @@
       // Steam-like auto-scroll: shift to make current slide first when it's outside visible area
       const activeThumbnail = thumbnails[currentSlide];
       if (activeThumbnail) {
-        const stripScrollLeft = thumbnailStrip.scrollLeft;
-        const stripWidth = thumbnailStrip.offsetWidth;
-        const thumbnailLeft = activeThumbnail.offsetLeft;
-        const thumbnailWidth = activeThumbnail.offsetWidth;
+        const stripRect = thumbnailStrip.getBoundingClientRect();
+        const thumbnailRect = activeThumbnail.getBoundingClientRect();
         
-        const thumbnailRight = thumbnailLeft + thumbnailWidth;
-        const visibleRight = stripScrollLeft + stripWidth;
+        const stripScrollLeft = thumbnailStrip.scrollLeft;
+        const stripWidth = stripRect.width;
+        
+        // Calculate thumbnail position relative to the visible area
+        const thumbnailRelativeLeft = thumbnailRect.left - stripRect.left;
+        const thumbnailRelativeRight = thumbnailRelativeLeft + thumbnailRect.width;
         
         // Check if thumbnail is outside visible area
-        if (thumbnailLeft < stripScrollLeft || thumbnailRight > visibleRight) {
+        if (thumbnailRelativeLeft < 0 || thumbnailRelativeRight > stripWidth) {
           // Thumbnail is outside visible area - scroll to make it the first visible slide
+          const scrollTarget = stripScrollLeft + thumbnailRelativeLeft;
           thumbnailStrip.scrollTo({
-            left: thumbnailLeft,
+            left: scrollTarget,
             behavior: 'smooth'
           });
         }
