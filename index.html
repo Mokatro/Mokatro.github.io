@@ -39,31 +39,37 @@
       <div class="w-full md:w-1/2 relative bg-gradient-to-br from-orange-900 via-amber-800 to-yellow-900 flex items-center justify-center overflow-hidden min-h-[50vh] md:min-h-0">
         <div class="absolute inset-0 bg-black opacity-20"></div>
         
-        <div class="relative z-10 w-full h-full flex items-center justify-center py-12 md:py-0">
-          <!-- Preview Content - Responsive sizing -->
-          <div class="absolute top-20 sm:top-40 left-10 sm:left-40 bg-amber-950 border border-yellow-600 sm:border-2 rounded-lg overflow-hidden shadow-xl max-h-[200px] sm:max-h-[700px]">
-            <img src="/highlights/hearthstone-1.png" alt="Hearthstone Preview 1" class="max-w-xs sm:max-w-2xl max-h-[200px] sm:max-h-[700px] object-contain">
+        <!-- Highlights Container -->
+        <div class="absolute inset-0 pointer-events-none">
+          <!-- Top Left - Always visible -->
+          <div class="absolute top-[5%] left-[3%] max-w-[35%] max-h-[30%] bg-amber-950 border border-yellow-600 md:border-2 rounded-lg overflow-hidden shadow-xl">
+            <img src="/highlights/hearthstone-1.png" alt="Hearthstone Preview 1" class="w-full h-full object-contain">
           </div>
 
-          <div class="absolute bottom-10 sm:bottom-20 left-8 sm:left-20 bg-amber-950 border border-yellow-600 sm:border-2 rounded-lg overflow-hidden shadow-xl max-h-[200px] sm:max-h-[700px]">
-            <img src="/highlights/hearthstone-2.png" alt="Hearthstone Preview 2" class="max-w-xs sm:max-w-2xl max-h-[200px] sm:max-h-[700px] object-contain">
+          <!-- Bottom Left - Always visible -->
+          <div class="absolute bottom-[5%] left-[3%] max-w-[35%] max-h-[30%] bg-amber-950 border border-yellow-600 md:border-2 rounded-lg overflow-hidden shadow-xl">
+            <img src="/highlights/hearthstone-2.png" alt="Hearthstone Preview 2" class="w-full h-full object-contain">
           </div>
 
-          <div class="absolute top-10 sm:top-20 right-8 sm:right-20 bg-amber-950 border border-yellow-600 sm:border-2 rounded-lg overflow-hidden shadow-xl max-h-[200px] sm:max-h-[700px]">
-            <img src="/highlights/hearthstone-3.png" alt="Hearthstone Preview 3" class="max-w-xs sm:max-w-2xl max-h-[200px] sm:max-h-[700px] object-contain">
+          <!-- Top Right - Hidden on mobile -->
+          <div class="hidden md:block absolute top-[5%] right-[3%] max-w-[35%] max-h-[30%] bg-amber-950 border-2 border-yellow-600 rounded-lg overflow-hidden shadow-xl">
+            <img src="/highlights/hearthstone-3.png" alt="Hearthstone Preview 3" class="w-full h-full object-contain">
           </div>
 
-          <div class="absolute bottom-20 sm:bottom-40 right-10 sm:right-40 bg-amber-950 border border-yellow-600 sm:border-2 rounded-lg overflow-hidden shadow-xl max-h-[200px] sm:max-h-[700px]">
-            <img src="/highlights/hearthstone-4.png" alt="Hearthstone Preview 4" class="max-w-xs sm:max-w-2xl max-h-[200px] sm:max-h-[700px] object-contain">
+          <!-- Bottom Right - Hidden on mobile -->
+          <div class="hidden md:block absolute bottom-[5%] right-[3%] max-w-[35%] max-h-[30%] bg-amber-950 border-2 border-yellow-600 rounded-lg overflow-hidden shadow-xl">
+            <img src="/highlights/hearthstone-4.png" alt="Hearthstone Preview 4" class="w-full h-full object-contain">
           </div>
-
-          <!-- Main Button -->
-          <div class="relative flex items-center justify-center group px-4">
-            <div class="absolute w-[280px] h-[200px] md:w-[500px] md:h-[350px] rounded-full transition-all duration-300 group-hover:w-[320px] group-hover:h-[230px] md:group-hover:w-[600px] md:group-hover:h-[420px]" 
+        </div>
+        
+        <!-- Button Container - Centered with proper z-index -->
+        <div class="relative z-10 flex items-center justify-center px-4 py-8">
+          <div class="relative flex items-center justify-center group">
+            <div class="absolute w-[90vw] max-w-[400px] aspect-[5/3] md:w-[500px] md:aspect-[10/7] rounded-full transition-all duration-300 group-hover:scale-110" 
                  style="background: radial-gradient(ellipse, rgba(251, 191, 36, 0.4) 0%, rgba(251, 146, 60, 0.3) 20%, rgba(251, 191, 36, 0.15) 40%, transparent 70%); filter: blur(2px);"></div>
             
             <div class="absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-300 group-hover:opacity-150">
-              <svg class="absolute animate-rotate-slow" style="width: 280px; height: 200px;" viewBox="0 0 500 350">
+              <svg class="absolute animate-rotate-slow w-full h-full max-w-[400px] md:max-w-[500px]" viewBox="0 0 500 350">
                 <defs>
                   <radialGradient id="rayGlow1">
                     <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6" />
@@ -73,7 +79,7 @@
                 <g id="rays1"></g>
               </svg>
               
-              <svg class="absolute animate-rotate-slower" style="width: 280px; height: 200px;" viewBox="0 0 500 350">
+              <svg class="absolute animate-rotate-slower w-full h-full max-w-[400px] md:max-w-[500px]" viewBox="0 0 500 350">
                 <defs>
                   <radialGradient id="rayGlow2">
                     <stop offset="0%" stop-color="#fb923c" stop-opacity="0.5" />
@@ -84,15 +90,12 @@
               </svg>
             </div>
             
-            <div class="absolute w-full h-full rounded-lg transition-all duration-300 md:group-hover:shadow-[0_0_80px_30px_rgba(251,191,36,0.8),0_0_120px_50px_rgba(251,146,60,0.6)]" 
-                 style="box-shadow: 0 0 60px 20px rgba(251, 191, 36, 0.6), 0 0 100px 40px rgba(251, 146, 60, 0.4);"></div>
-            
             <button 
               onclick="window.location.href='#hearthstone'"
-              class="relative z-10 bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white font-bold py-3 px-6 md:py-6 md:px-12 rounded-lg text-base md:text-2xl shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-[0_0_80px_30px_rgba(251,191,36,0.8),0_0_120px_50px_rgba(251,146,60,0.6)] border-2 md:border-4 border-yellow-400 flex items-center gap-2 md:gap-3"
+              class="relative z-10 bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white font-bold py-3 px-6 md:py-6 md:px-12 rounded-lg text-base md:text-2xl transform transition-all duration-300 hover:scale-110 border-2 md:border-4 border-yellow-400 flex items-center gap-2 md:gap-3 shadow-[0_0_40px_10px_rgba(251,191,36,0.5)] hover:shadow-[0_0_60px_20px_rgba(251,191,36,0.8)]"
             >
               <span class="text-xl md:text-3xl">←</span>
-              <span class="text-sm md:text-base lg:text-2xl">Check out Hearthstone Project!</span>
+              <span class="text-sm md:text-base lg:text-2xl whitespace-nowrap">Check out Hearthstone Project!</span>
             </button>
           </div>
         </div>
@@ -102,31 +105,37 @@
       <div class="w-full md:w-1/2 relative bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 flex items-center justify-center overflow-hidden min-h-[50vh] md:min-h-0">
         <div class="absolute inset-0 bg-black opacity-20"></div>
         
-        <div class="relative z-10 w-full h-full flex items-center justify-center py-12 md:py-0">
-          <!-- Preview Content - Responsive sizing, 1&4 closer vertically, 2&3 taller -->
-          <div class="absolute top-16 sm:top-24 xl:top-24 left-10 sm:left-40 bg-indigo-950 border border-cyan-500 sm:border-2 rounded-lg overflow-hidden shadow-xl max-h-[200px] sm:max-h-[700px]">
-            <img src="/highlights/tft-1.png" alt="TFT Preview 1" class="max-w-xs sm:max-w-2xl max-h-[200px] sm:max-h-[700px] object-contain">
+        <!-- Highlights Container -->
+        <div class="absolute inset-0 pointer-events-none">
+          <!-- Top Left - Always visible -->
+          <div class="absolute top-[5%] left-[3%] max-w-[35%] max-h-[30%] bg-indigo-950 border border-cyan-500 md:border-2 rounded-lg overflow-hidden shadow-xl">
+            <img src="/highlights/tft-1.png" alt="TFT Preview 1" class="w-full h-full object-contain">
           </div>
 
-          <div class="absolute bottom-10 sm:bottom-10 xl:bottom-10 left-8 sm:left-10 bg-indigo-950 border border-cyan-500 sm:border-2 rounded-lg overflow-hidden shadow-xl max-h-[250px] sm:max-h-[600px]">
-            <img src="/highlights/tft-2.png" alt="TFT Preview 2" class="max-w-xs sm:max-w-xl max-h-[250px] sm:max-h-[600px] object-contain">
+          <!-- Bottom Left - Always visible -->
+          <div class="absolute bottom-[5%] left-[3%] max-w-[35%] max-h-[30%] bg-indigo-950 border border-cyan-500 md:border-2 rounded-lg overflow-hidden shadow-xl">
+            <img src="/highlights/tft-2.png" alt="TFT Preview 2" class="w-full h-full object-contain">
           </div>
 
-          <div class="absolute top-10 sm:top-10 xl:top-10 right-8 sm:right-10 bg-indigo-950 border border-cyan-500 sm:border-2 rounded-lg overflow-hidden shadow-xl max-h-[250px] sm:max-h-[600px]">
-            <img src="/highlights/tft-3.png" alt="TFT Preview 3" class="max-w-xs sm:max-w-xl max-h-[250px] sm:max-h-[600px] object-contain">
+          <!-- Top Right - Hidden on mobile -->
+          <div class="hidden md:block absolute top-[5%] right-[3%] max-w-[35%] max-h-[30%] bg-indigo-950 border-2 border-cyan-500 rounded-lg overflow-hidden shadow-xl">
+            <img src="/highlights/tft-3.png" alt="TFT Preview 3" class="w-full h-full object-contain">
           </div>
 
-          <div class="absolute bottom-16 sm:bottom-24 xl:bottom-24 right-10 sm:right-40 bg-indigo-950 border border-cyan-500 sm:border-2 rounded-lg overflow-hidden shadow-xl max-h-[200px] sm:max-h-[700px]">
-            <img src="/highlights/tft-4.png" alt="TFT Preview 4" class="max-w-xs sm:max-w-2xl max-h-[200px] sm:max-h-[700px] object-contain">
+          <!-- Bottom Right - Hidden on mobile -->
+          <div class="hidden md:block absolute bottom-[5%] right-[3%] max-w-[35%] max-h-[30%] bg-indigo-950 border-2 border-cyan-500 rounded-lg overflow-hidden shadow-xl">
+            <img src="/highlights/tft-4.png" alt="TFT Preview 4" class="w-full h-full object-contain">
           </div>
-
-          <!-- Main Button -->
-          <div class="relative flex items-center justify-center group px-4">
-            <div class="absolute w-[280px] h-[200px] md:w-[500px] md:h-[350px] rounded-full transition-all duration-300 group-hover:w-[320px] group-hover:h-[230px] md:group-hover:w-[600px] md:group-hover:h-[420px]" 
+        </div>
+        
+        <!-- Button Container - Centered with proper z-index -->
+        <div class="relative z-10 flex items-center justify-center px-4 py-8">
+          <div class="relative flex items-center justify-center group">
+            <div class="absolute w-[90vw] max-w-[400px] aspect-[5/3] md:w-[500px] md:aspect-[10/7] rounded-full transition-all duration-300 group-hover:scale-110" 
                  style="background: radial-gradient(ellipse, rgba(34, 211, 238, 0.4) 0%, rgba(168, 85, 247, 0.3) 20%, rgba(34, 211, 238, 0.15) 40%, transparent 70%); filter: blur(2px);"></div>
             
             <div class="absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-300 group-hover:opacity-150">
-              <svg class="absolute animate-rotate-slow" style="width: 280px; height: 200px;" viewBox="0 0 500 350">
+              <svg class="absolute animate-rotate-slow w-full h-full max-w-[400px] md:max-w-[500px]" viewBox="0 0 500 350">
                 <defs>
                   <radialGradient id="rayGlow3">
                     <stop offset="0%" stop-color="#a855f7" stop-opacity="0.6" />
@@ -136,7 +145,7 @@
                 <g id="rays3"></g>
               </svg>
               
-              <svg class="absolute animate-rotate-slower" style="width: 280px; height: 200px;" viewBox="0 0 500 350">
+              <svg class="absolute animate-rotate-slower w-full h-full max-w-[400px] md:max-w-[500px]" viewBox="0 0 500 350">
                 <defs>
                   <radialGradient id="rayGlow4">
                     <stop offset="0%" stop-color="#c084fc" stop-opacity="0.5" />
@@ -147,14 +156,11 @@
               </svg>
             </div>
             
-            <div class="absolute w-full h-full rounded-lg transition-all duration-300 md:group-hover:shadow-[0_0_80px_30px_rgba(34,211,238,0.8),0_0_120px_50px_rgba(168,85,247,0.6)]" 
-                 style="box-shadow: 0 0 60px 20px rgba(34, 211, 238, 0.6), 0 0 100px 40px rgba(168, 85, 247, 0.4);"></div>
-            
             <button 
               onclick="window.location.href='teamfight-tactics.html'"
-              class="relative z-10 bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white font-bold py-3 px-6 md:py-6 md:px-12 rounded-lg text-base md:text-2xl shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-[0_0_80px_30px_rgba(34,211,238,0.8),0_0_120px_50px_rgba(168,85,247,0.6)] border-2 md:border-4 border-cyan-400 flex items-center gap-2 md:gap-3"
+              class="relative z-10 bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white font-bold py-3 px-6 md:py-6 md:px-12 rounded-lg text-base md:text-2xl transform transition-all duration-300 hover:scale-110 border-2 md:border-4 border-cyan-400 flex items-center gap-2 md:gap-3 shadow-[0_0_40px_10px_rgba(34,211,238,0.5)] hover:shadow-[0_0_60px_20px_rgba(34,211,238,0.8)]"
             >
-              <span class="text-sm md:text-base lg:text-2xl">Check out Teamfight Tactics Project!</span>
+              <span class="text-sm md:text-base lg:text-2xl whitespace-nowrap">Check out Teamfight Tactics Project!</span>
               <span class="text-xl md:text-3xl">→</span>
             </button>
           </div>
