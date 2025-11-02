@@ -176,7 +176,7 @@
     generateRays('rays3', 48);
     generateRays('rays4', 48, 3.75);
 
-    // Dynamic highlight layout system
+    // Dynamic highlight layout system - Aggressive space filling
     class HighlightLayoutEngine {
       constructor(containerId, highlightImages, theme) {
         this.container = document.getElementById(containerId);
@@ -220,100 +220,91 @@
         const containerRect = this.container.getBoundingClientRect();
         const buttonRect = this.buttonWrapper.getBoundingClientRect();
         
-        // Calculate button position relative to container
-        const buttonCenterX = buttonRect.left + buttonRect.width / 2 - containerRect.left;
-        const buttonCenterY = buttonRect.top + buttonRect.height / 2 - containerRect.top;
-        const buttonWidth = buttonRect.width * 1.1; // Add 10% buffer for glow
-        const buttonHeight = buttonRect.height * 1.1;
+        // Calculate button bounds with buffer for glow
+        const glowBuffer = 30;
+        const buttonLeft = buttonRect.left - containerRect.left - glowBuffer;
+        const buttonRight = buttonRect.right - containerRect.left + glowBuffer;
+        const buttonTop = buttonRect.top - containerRect.top - glowBuffer;
+        const buttonBottom = buttonRect.bottom - containerRect.top + glowBuffer;
         
-        const padding = 15;
-        const minGap = 10;
+        const edgePadding = 10;
+        const minGap = 8;
         
-        // Determine how many highlights to show based on screen width
+        // Determine visible images based on screen width
         const isMobile = window.innerWidth < 768;
         const visibleImages = isMobile ? this.imageData.slice(0, 2) : this.imageData;
         
-        // Calculate actual available space more generously
-        const leftSpace = buttonCenterX - buttonWidth / 2 - minGap;
-        const rightSpace = containerRect.width - (buttonCenterX + buttonWidth / 2) - minGap;
-        const topSpace = buttonCenterY - buttonHeight / 2 - minGap;
-        const bottomSpace = containerRect.height - (buttonCenterY + buttonHeight / 2) - minGap;
-        
-        // Define quadrants with aggressive space usage
+        // Define quadrant boundaries - very aggressive
         const quadrants = [
           { // Top-left
-            x: padding,
-            y: padding,
-            maxWidth: leftSpace - padding,
-            maxHeight: topSpace - padding,
-            targetScale: 0.9 // Use 90% of available space
+            left: edgePadding,
+            top: edgePadding,
+            right: buttonLeft - minGap,
+            bottom: buttonTop - minGap
           },
           { // Bottom-left
-            x: padding,
-            y: buttonCenterY + buttonHeight / 2 + minGap,
-            maxWidth: leftSpace - padding,
-            maxHeight: bottomSpace - padding,
-            targetScale: 0.9
+            left: edgePadding,
+            top: buttonBottom + minGap,
+            right: buttonLeft - minGap,
+            bottom: containerRect.height - edgePadding
           },
           { // Top-right
-            x: buttonCenterX + buttonWidth / 2 + minGap,
-            y: padding,
-            maxWidth: rightSpace - padding,
-            maxHeight: topSpace - padding,
-            targetScale: 0.9
+            left: buttonRight + minGap,
+            top: edgePadding,
+            right: containerRect.width - edgePadding,
+            bottom: buttonTop - minGap
           },
           { // Bottom-right
-            x: buttonCenterX + buttonWidth / 2 + minGap,
-            y: buttonCenterY + buttonHeight / 2 + minGap,
-            maxWidth: rightSpace - padding,
-            maxHeight: bottomSpace - padding,
-            targetScale: 0.9
+            left: buttonRight + minGap,
+            top: buttonBottom + minGap,
+            right: containerRect.width - edgePadding,
+            bottom: containerRect.height - edgePadding
           }
         ];
         
         const layouts = [];
         
         visibleImages.forEach((imgData, idx) => {
-          const quadrant = quadrants[idx % quadrants.length];
+          const quad = quadrants[idx % quadrants.length];
+          const availWidth = quad.right - quad.left;
+          const availHeight = quad.bottom - quad.top;
           
-          // Calculate the maximum size that fits in the quadrant
-          let width, height;
+          // Calculate maximum scale to fill space aggressively
+          const scaleWidth = availWidth / imgData.width;
+          const scaleHeight = availHeight / imgData.height;
           
-          // Try to use as much space as possible
-          const widthIfWidthConstrained = quadrant.maxWidth * quadrant.targetScale;
-          const heightIfWidthConstrained = widthIfWidthConstrained / imgData.aspectRatio;
+          // Use the larger scale that still fits (fill more space)
+          let scale = Math.min(scaleWidth, scaleHeight);
           
-          const heightIfHeightConstrained = quadrant.maxHeight * quadrant.targetScale;
-          const widthIfHeightConstrained = heightIfHeightConstrained * imgData.aspectRatio;
+          // Increase scale by 5% for more aggressive filling
+          scale *= 1.05;
           
-          if (heightIfWidthConstrained <= quadrant.maxHeight) {
-            // Width-constrained
-            width = widthIfWidthConstrained;
-            height = heightIfWidthConstrained;
-          } else {
-            // Height-constrained
-            height = heightIfHeightConstrained;
-            width = widthIfHeightConstrained;
+          // But ensure it still fits
+          let finalWidth = imgData.width * scale;
+          let finalHeight = imgData.height * scale;
+          
+          if (finalWidth > availWidth) {
+            scale = availWidth / imgData.width;
+            finalWidth = availWidth;
+            finalHeight = imgData.height * scale;
           }
           
-          // Ensure we're using significant space
-          const minSize = Math.min(containerRect.width, containerRect.height) * 0.15;
-          if (width < minSize || height < minSize) {
-            const scale = minSize / Math.min(width, height);
-            width *= scale;
-            height *= scale;
+          if (finalHeight > availHeight) {
+            scale = availHeight / imgData.height;
+            finalHeight = availHeight;
+            finalWidth = imgData.width * scale;
           }
           
-          // Final bounds check
-          width = Math.min(width, quadrant.maxWidth);
-          height = Math.min(height, quadrant.maxHeight);
+          // Center in quadrant if there's extra space
+          const x = quad.left + (availWidth - finalWidth) / 2;
+          const y = quad.top + (availHeight - finalHeight) / 2;
           
           layouts.push({
             src: imgData.src,
-            x: quadrant.x,
-            y: quadrant.y,
-            width,
-            height,
+            x: Math.max(edgePadding, x),
+            y: Math.max(edgePadding, y),
+            width: finalWidth,
+            height: finalHeight,
             index: imgData.index
           });
         });
