@@ -223,49 +223,51 @@
         // Calculate button position relative to container
         const buttonCenterX = buttonRect.left + buttonRect.width / 2 - containerRect.left;
         const buttonCenterY = buttonRect.top + buttonRect.height / 2 - containerRect.top;
-        const buttonWidth = buttonRect.width;
-        const buttonHeight = buttonRect.height;
+        const buttonWidth = buttonRect.width * 1.1; // Add 10% buffer for glow
+        const buttonHeight = buttonRect.height * 1.1;
         
-        const padding = 20;
-        const minGap = 15;
+        const padding = 15;
+        const minGap = 10;
         
         // Determine how many highlights to show based on screen width
         const isMobile = window.innerWidth < 768;
         const visibleImages = isMobile ? this.imageData.slice(0, 2) : this.imageData;
         
-        // Define quadrants with available space
+        // Calculate actual available space more generously
+        const leftSpace = buttonCenterX - buttonWidth / 2 - minGap;
+        const rightSpace = containerRect.width - (buttonCenterX + buttonWidth / 2) - minGap;
+        const topSpace = buttonCenterY - buttonHeight / 2 - minGap;
+        const bottomSpace = containerRect.height - (buttonCenterY + buttonHeight / 2) - minGap;
+        
+        // Define quadrants with aggressive space usage
         const quadrants = [
           { // Top-left
             x: padding,
             y: padding,
-            maxWidth: buttonCenterX - buttonWidth / 2 - minGap - padding,
-            maxHeight: buttonCenterY - buttonHeight / 2 - minGap - padding,
-            anchorX: 'left',
-            anchorY: 'top'
+            maxWidth: leftSpace - padding,
+            maxHeight: topSpace - padding,
+            targetScale: 0.9 // Use 90% of available space
           },
           { // Bottom-left
             x: padding,
             y: buttonCenterY + buttonHeight / 2 + minGap,
-            maxWidth: buttonCenterX - buttonWidth / 2 - minGap - padding,
-            maxHeight: containerRect.height - (buttonCenterY + buttonHeight / 2 + minGap) - padding,
-            anchorX: 'left',
-            anchorY: 'top'
+            maxWidth: leftSpace - padding,
+            maxHeight: bottomSpace - padding,
+            targetScale: 0.9
           },
           { // Top-right
             x: buttonCenterX + buttonWidth / 2 + minGap,
             y: padding,
-            maxWidth: containerRect.width - (buttonCenterX + buttonWidth / 2 + minGap) - padding,
-            maxHeight: buttonCenterY - buttonHeight / 2 - minGap - padding,
-            anchorX: 'left',
-            anchorY: 'top'
+            maxWidth: rightSpace - padding,
+            maxHeight: topSpace - padding,
+            targetScale: 0.9
           },
           { // Bottom-right
             x: buttonCenterX + buttonWidth / 2 + minGap,
             y: buttonCenterY + buttonHeight / 2 + minGap,
-            maxWidth: containerRect.width - (buttonCenterX + buttonWidth / 2 + minGap) - padding,
-            maxHeight: containerRect.height - (buttonCenterY + buttonHeight / 2 + minGap) - padding,
-            anchorX: 'left',
-            anchorY: 'top'
+            maxWidth: rightSpace - padding,
+            maxHeight: bottomSpace - padding,
+            targetScale: 0.9
           }
         ];
         
@@ -277,19 +279,34 @@
           // Calculate the maximum size that fits in the quadrant
           let width, height;
           
-          if (quadrant.maxWidth / imgData.aspectRatio <= quadrant.maxHeight) {
+          // Try to use as much space as possible
+          const widthIfWidthConstrained = quadrant.maxWidth * quadrant.targetScale;
+          const heightIfWidthConstrained = widthIfWidthConstrained / imgData.aspectRatio;
+          
+          const heightIfHeightConstrained = quadrant.maxHeight * quadrant.targetScale;
+          const widthIfHeightConstrained = heightIfHeightConstrained * imgData.aspectRatio;
+          
+          if (heightIfWidthConstrained <= quadrant.maxHeight) {
             // Width-constrained
-            width = quadrant.maxWidth;
-            height = width / imgData.aspectRatio;
+            width = widthIfWidthConstrained;
+            height = heightIfWidthConstrained;
           } else {
             // Height-constrained
-            height = quadrant.maxHeight;
-            width = height * imgData.aspectRatio;
+            height = heightIfHeightConstrained;
+            width = widthIfHeightConstrained;
           }
           
-          // Ensure minimum visibility
-          width = Math.max(100, Math.min(width, quadrant.maxWidth));
-          height = Math.max(100, Math.min(height, quadrant.maxHeight));
+          // Ensure we're using significant space
+          const minSize = Math.min(containerRect.width, containerRect.height) * 0.15;
+          if (width < minSize || height < minSize) {
+            const scale = minSize / Math.min(width, height);
+            width *= scale;
+            height *= scale;
+          }
+          
+          // Final bounds check
+          width = Math.min(width, quadrant.maxWidth);
+          height = Math.min(height, quadrant.maxHeight);
           
           layouts.push({
             src: imgData.src,
