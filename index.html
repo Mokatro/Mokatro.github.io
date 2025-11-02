@@ -227,36 +227,39 @@
         const buttonCenterX = buttonRect.left + buttonRect.width / 2 - containerRect.left;
         const buttonCenterY = buttonRect.top + buttonRect.height / 2 - containerRect.top;
         
+        // Buffer from center point - larger vertically to account for button height and glow
+        const horizontalGap = 15;
+        const verticalGap = 60; // Increased to prevent vertical clipping
+        
         const edgePadding = 8;
-        const minGap = 15; // Gap from center point
         
         // Determine visible images based on screen width
         const isMobile = window.innerWidth < 768;
         const visibleImages = isMobile ? this.imageData.slice(0, 2) : this.imageData;
         
-        // Define quadrants extending to button CENTER
+        // Define quadrants extending to button CENTER with asymmetric gaps
         const quadrants = [
           { // Top-left: extends to center of button
             left: edgePadding,
             top: edgePadding,
-            right: buttonCenterX - minGap,
-            bottom: buttonCenterY - minGap
+            right: buttonCenterX - horizontalGap,
+            bottom: buttonCenterY - verticalGap
           },
           { // Bottom-left: extends to center of button
             left: edgePadding,
-            top: buttonCenterY + minGap,
-            right: buttonCenterX - minGap,
+            top: buttonCenterY + verticalGap,
+            right: buttonCenterX - horizontalGap,
             bottom: containerRect.height - edgePadding
           },
           { // Top-right: extends from center of button
-            left: buttonCenterX + minGap,
+            left: buttonCenterX + horizontalGap,
             top: edgePadding,
             right: containerRect.width - edgePadding,
-            bottom: buttonCenterY - minGap
+            bottom: buttonCenterY - verticalGap
           },
           { // Bottom-right: extends from center of button
-            left: buttonCenterX + minGap,
-            top: buttonCenterY + minGap,
+            left: buttonCenterX + horizontalGap,
+            top: buttonCenterY + verticalGap,
             right: containerRect.width - edgePadding,
             bottom: containerRect.height - edgePadding
           }
