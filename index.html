@@ -36,35 +36,17 @@
     <!-- Main Split Content -->
     <div class="flex-1 flex flex-col md:flex-row">
       <!-- Hearthstone Side -->
-      <div class="w-full md:w-1/2 relative bg-gradient-to-br from-orange-900 via-amber-800 to-yellow-900 flex items-center justify-center overflow-hidden min-h-[50vh] md:min-h-0">
+      <div id="hearthstone-container" class="w-full md:w-1/2 relative bg-gradient-to-br from-orange-900 via-amber-800 to-yellow-900 flex items-center justify-center overflow-hidden min-h-[50vh] md:min-h-0">
         <div class="absolute inset-0 bg-black opacity-20"></div>
         
         <!-- Highlights Container -->
-        <div class="absolute inset-0 pointer-events-none">
-          <!-- Top Left - Always visible -->
-          <div class="absolute top-[5%] left-[3%] max-w-[35%] max-h-[30%] bg-amber-950 border border-yellow-600 md:border-2 rounded-lg overflow-hidden shadow-xl">
-            <img src="/highlights/hearthstone-1.png" alt="Hearthstone Preview 1" class="w-full h-full object-contain">
-          </div>
-
-          <!-- Bottom Left - Always visible -->
-          <div class="absolute bottom-[5%] left-[3%] max-w-[35%] max-h-[30%] bg-amber-950 border border-yellow-600 md:border-2 rounded-lg overflow-hidden shadow-xl">
-            <img src="/highlights/hearthstone-2.png" alt="Hearthstone Preview 2" class="w-full h-full object-contain">
-          </div>
-
-          <!-- Top Right - Hidden on mobile -->
-          <div class="hidden md:block absolute top-[5%] right-[3%] max-w-[35%] max-h-[30%] bg-amber-950 border-2 border-yellow-600 rounded-lg overflow-hidden shadow-xl">
-            <img src="/highlights/hearthstone-3.png" alt="Hearthstone Preview 3" class="w-full h-full object-contain">
-          </div>
-
-          <!-- Bottom Right - Hidden on mobile -->
-          <div class="hidden md:block absolute bottom-[5%] right-[3%] max-w-[35%] max-h-[30%] bg-amber-950 border-2 border-yellow-600 rounded-lg overflow-hidden shadow-xl">
-            <img src="/highlights/hearthstone-4.png" alt="Hearthstone Preview 4" class="w-full h-full object-contain">
-          </div>
+        <div id="hearthstone-highlights" class="absolute inset-0 pointer-events-none">
+          <!-- Dynamically positioned highlights will be added here -->
         </div>
         
         <!-- Button Container - Centered with proper z-index -->
         <div class="relative z-10 flex items-center justify-center px-4 py-8">
-          <div class="relative flex items-center justify-center group">
+          <div id="hearthstone-button-wrapper" class="relative flex items-center justify-center group">
             <div class="absolute w-[90vw] max-w-[400px] aspect-[5/3] md:w-[500px] md:aspect-[10/7] rounded-full transition-all duration-300 group-hover:scale-110" 
                  style="background: radial-gradient(ellipse, rgba(251, 191, 36, 0.4) 0%, rgba(251, 146, 60, 0.3) 20%, rgba(251, 191, 36, 0.15) 40%, transparent 70%); filter: blur(2px);"></div>
             
@@ -102,35 +84,17 @@
       </div>
 
       <!-- Teamfight Tactics Side -->
-      <div class="w-full md:w-1/2 relative bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 flex items-center justify-center overflow-hidden min-h-[50vh] md:min-h-0">
+      <div id="tft-container" class="w-full md:w-1/2 relative bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 flex items-center justify-center overflow-hidden min-h-[50vh] md:min-h-0">
         <div class="absolute inset-0 bg-black opacity-20"></div>
         
         <!-- Highlights Container -->
-        <div class="absolute inset-0 pointer-events-none">
-          <!-- Top Left - Always visible -->
-          <div class="absolute top-[5%] left-[3%] max-w-[35%] max-h-[30%] bg-indigo-950 border border-cyan-500 md:border-2 rounded-lg overflow-hidden shadow-xl">
-            <img src="/highlights/tft-1.png" alt="TFT Preview 1" class="w-full h-full object-contain">
-          </div>
-
-          <!-- Bottom Left - Always visible -->
-          <div class="absolute bottom-[5%] left-[3%] max-w-[35%] max-h-[30%] bg-indigo-950 border border-cyan-500 md:border-2 rounded-lg overflow-hidden shadow-xl">
-            <img src="/highlights/tft-2.png" alt="TFT Preview 2" class="w-full h-full object-contain">
-          </div>
-
-          <!-- Top Right - Hidden on mobile -->
-          <div class="hidden md:block absolute top-[5%] right-[3%] max-w-[35%] max-h-[30%] bg-indigo-950 border-2 border-cyan-500 rounded-lg overflow-hidden shadow-xl">
-            <img src="/highlights/tft-3.png" alt="TFT Preview 3" class="w-full h-full object-contain">
-          </div>
-
-          <!-- Bottom Right - Hidden on mobile -->
-          <div class="hidden md:block absolute bottom-[5%] right-[3%] max-w-[35%] max-h-[30%] bg-indigo-950 border-2 border-cyan-500 rounded-lg overflow-hidden shadow-xl">
-            <img src="/highlights/tft-4.png" alt="TFT Preview 4" class="w-full h-full object-contain">
-          </div>
+        <div id="tft-highlights" class="absolute inset-0 pointer-events-none">
+          <!-- Dynamically positioned highlights will be added here -->
         </div>
         
         <!-- Button Container - Centered with proper z-index -->
         <div class="relative z-10 flex items-center justify-center px-4 py-8">
-          <div class="relative flex items-center justify-center group">
+          <div id="tft-button-wrapper" class="relative flex items-center justify-center group">
             <div class="absolute w-[90vw] max-w-[400px] aspect-[5/3] md:w-[500px] md:aspect-[10/7] rounded-full transition-all duration-300 group-hover:scale-110" 
                  style="background: radial-gradient(ellipse, rgba(34, 211, 238, 0.4) 0%, rgba(168, 85, 247, 0.3) 20%, rgba(34, 211, 238, 0.15) 40%, transparent 70%); filter: blur(2px);"></div>
             
@@ -211,6 +175,213 @@
     generateRays('rays2', 48, 3.75);
     generateRays('rays3', 48);
     generateRays('rays4', 48, 3.75);
+
+    // Dynamic highlight layout system
+    class HighlightLayoutEngine {
+      constructor(containerId, highlightImages, theme) {
+        this.container = document.getElementById(containerId);
+        this.highlightContainer = document.getElementById(`${containerId.replace('-container', '')}-highlights`);
+        this.buttonWrapper = document.getElementById(`${containerId.replace('-container', '')}-button-wrapper`);
+        this.images = highlightImages;
+        this.theme = theme;
+        this.highlights = [];
+        this.imageData = [];
+      }
+
+      async loadImages() {
+        const promises = this.images.map((src, index) => {
+          return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+              resolve({
+                src,
+                width: img.naturalWidth,
+                height: img.naturalHeight,
+                aspectRatio: img.naturalWidth / img.naturalHeight,
+                index
+              });
+            };
+            img.onerror = () => {
+              resolve({
+                src,
+                width: 1,
+                height: 1,
+                aspectRatio: 1,
+                index
+              });
+            };
+            img.src = src;
+          });
+        });
+        this.imageData = await Promise.all(promises);
+      }
+
+      calculateLayout() {
+        const containerRect = this.container.getBoundingClientRect();
+        const buttonRect = this.buttonWrapper.getBoundingClientRect();
+        
+        // Calculate button position relative to container
+        const buttonCenterX = buttonRect.left + buttonRect.width / 2 - containerRect.left;
+        const buttonCenterY = buttonRect.top + buttonRect.height / 2 - containerRect.top;
+        const buttonWidth = buttonRect.width;
+        const buttonHeight = buttonRect.height;
+        
+        const padding = 20;
+        const minGap = 15;
+        
+        // Determine how many highlights to show based on screen width
+        const isMobile = window.innerWidth < 768;
+        const visibleImages = isMobile ? this.imageData.slice(0, 2) : this.imageData;
+        
+        // Define quadrants with available space
+        const quadrants = [
+          { // Top-left
+            x: padding,
+            y: padding,
+            maxWidth: buttonCenterX - buttonWidth / 2 - minGap - padding,
+            maxHeight: buttonCenterY - buttonHeight / 2 - minGap - padding,
+            anchorX: 'left',
+            anchorY: 'top'
+          },
+          { // Bottom-left
+            x: padding,
+            y: buttonCenterY + buttonHeight / 2 + minGap,
+            maxWidth: buttonCenterX - buttonWidth / 2 - minGap - padding,
+            maxHeight: containerRect.height - (buttonCenterY + buttonHeight / 2 + minGap) - padding,
+            anchorX: 'left',
+            anchorY: 'top'
+          },
+          { // Top-right
+            x: buttonCenterX + buttonWidth / 2 + minGap,
+            y: padding,
+            maxWidth: containerRect.width - (buttonCenterX + buttonWidth / 2 + minGap) - padding,
+            maxHeight: buttonCenterY - buttonHeight / 2 - minGap - padding,
+            anchorX: 'left',
+            anchorY: 'top'
+          },
+          { // Bottom-right
+            x: buttonCenterX + buttonWidth / 2 + minGap,
+            y: buttonCenterY + buttonHeight / 2 + minGap,
+            maxWidth: containerRect.width - (buttonCenterX + buttonWidth / 2 + minGap) - padding,
+            maxHeight: containerRect.height - (buttonCenterY + buttonHeight / 2 + minGap) - padding,
+            anchorX: 'left',
+            anchorY: 'top'
+          }
+        ];
+        
+        const layouts = [];
+        
+        visibleImages.forEach((imgData, idx) => {
+          const quadrant = quadrants[idx % quadrants.length];
+          
+          // Calculate the maximum size that fits in the quadrant
+          let width, height;
+          
+          if (quadrant.maxWidth / imgData.aspectRatio <= quadrant.maxHeight) {
+            // Width-constrained
+            width = quadrant.maxWidth;
+            height = width / imgData.aspectRatio;
+          } else {
+            // Height-constrained
+            height = quadrant.maxHeight;
+            width = height * imgData.aspectRatio;
+          }
+          
+          // Ensure minimum visibility
+          width = Math.max(100, Math.min(width, quadrant.maxWidth));
+          height = Math.max(100, Math.min(height, quadrant.maxHeight));
+          
+          layouts.push({
+            src: imgData.src,
+            x: quadrant.x,
+            y: quadrant.y,
+            width,
+            height,
+            index: imgData.index
+          });
+        });
+        
+        return layouts;
+      }
+
+      render() {
+        const layouts = this.calculateLayout();
+        this.highlightContainer.innerHTML = '';
+        
+        layouts.forEach(layout => {
+          const div = document.createElement('div');
+          div.className = `absolute bg-${this.theme.bgColor} border ${this.theme.borderSize} ${this.theme.borderColor} rounded-lg overflow-hidden shadow-xl transition-all duration-300`;
+          div.style.left = `${layout.x}px`;
+          div.style.top = `${layout.y}px`;
+          div.style.width = `${layout.width}px`;
+          div.style.height = `${layout.height}px`;
+          
+          const img = document.createElement('img');
+          img.src = layout.src;
+          img.alt = `Preview ${layout.index + 1}`;
+          img.className = 'w-full h-full object-contain';
+          
+          div.appendChild(img);
+          this.highlightContainer.appendChild(div);
+        });
+      }
+
+      async init() {
+        await this.loadImages();
+        this.render();
+      }
+
+      resize() {
+        this.render();
+      }
+    }
+
+    // Initialize layouts
+    const hearthstoneEngine = new HighlightLayoutEngine(
+      'hearthstone-container',
+      [
+        '/highlights/hearthstone-1.png',
+        '/highlights/hearthstone-2.png',
+        '/highlights/hearthstone-3.png',
+        '/highlights/hearthstone-4.png'
+      ],
+      {
+        bgColor: 'amber-950',
+        borderSize: 'border md:border-2',
+        borderColor: 'border-yellow-600'
+      }
+    );
+
+    const tftEngine = new HighlightLayoutEngine(
+      'tft-container',
+      [
+        '/highlights/tft-1.png',
+        '/highlights/tft-2.png',
+        '/highlights/tft-3.png',
+        '/highlights/tft-4.png'
+      ],
+      {
+        bgColor: 'indigo-950',
+        borderSize: 'border md:border-2',
+        borderColor: 'border-cyan-500'
+      }
+    );
+
+    // Initialize on load
+    window.addEventListener('load', async () => {
+      await hearthstoneEngine.init();
+      await tftEngine.init();
+    });
+
+    // Handle resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        hearthstoneEngine.resize();
+        tftEngine.resize();
+      }, 100);
+    });
   </script>
 </body>
 </html>
