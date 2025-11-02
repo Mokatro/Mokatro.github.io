@@ -229,7 +229,7 @@
         
         // Buffer from center point - larger vertically to account for button height and glow
         const horizontalGap = 15;
-        const verticalGap = 60; // Increased to prevent vertical clipping
+        const verticalGap = 60;
         
         const edgePadding = 8;
         
@@ -237,33 +237,53 @@
         const isMobile = window.innerWidth < 768;
         const visibleImages = isMobile ? this.imageData.slice(0, 2) : this.imageData;
         
-        // Define quadrants extending to button CENTER with asymmetric gaps
-        const quadrants = [
-          { // Top-left: extends to center of button
-            left: edgePadding,
-            top: edgePadding,
-            right: buttonCenterX - horizontalGap,
-            bottom: buttonCenterY - verticalGap
-          },
-          { // Bottom-left: extends to center of button
-            left: edgePadding,
-            top: buttonCenterY + verticalGap,
-            right: buttonCenterX - horizontalGap,
-            bottom: containerRect.height - edgePadding
-          },
-          { // Top-right: extends from center of button
-            left: buttonCenterX + horizontalGap,
-            top: edgePadding,
-            right: containerRect.width - edgePadding,
-            bottom: buttonCenterY - verticalGap
-          },
-          { // Bottom-right: extends from center of button
-            left: buttonCenterX + horizontalGap,
-            top: buttonCenterY + verticalGap,
-            right: containerRect.width - edgePadding,
-            bottom: containerRect.height - edgePadding
-          }
-        ];
+        let quadrants;
+        
+        if (isMobile) {
+          // Mobile: 2 sections (top and bottom), full width
+          quadrants = [
+            { // Top section - full width
+              left: edgePadding,
+              top: edgePadding,
+              right: containerRect.width - edgePadding,
+              bottom: buttonCenterY - verticalGap
+            },
+            { // Bottom section - full width
+              left: edgePadding,
+              top: buttonCenterY + verticalGap,
+              right: containerRect.width - edgePadding,
+              bottom: containerRect.height - edgePadding
+            }
+          ];
+        } else {
+          // Desktop: 4 quadrants
+          quadrants = [
+            { // Top-left
+              left: edgePadding,
+              top: edgePadding,
+              right: buttonCenterX - horizontalGap,
+              bottom: buttonCenterY - verticalGap
+            },
+            { // Bottom-left
+              left: edgePadding,
+              top: buttonCenterY + verticalGap,
+              right: buttonCenterX - horizontalGap,
+              bottom: containerRect.height - edgePadding
+            },
+            { // Top-right
+              left: buttonCenterX + horizontalGap,
+              top: edgePadding,
+              right: containerRect.width - edgePadding,
+              bottom: buttonCenterY - verticalGap
+            },
+            { // Bottom-right
+              left: buttonCenterX + horizontalGap,
+              top: buttonCenterY + verticalGap,
+              right: containerRect.width - edgePadding,
+              bottom: containerRect.height - edgePadding
+            }
+          ];
+        }
         
         const layouts = [];
         
@@ -285,9 +305,9 @@
           let finalWidth = imgData.width * scale;
           let finalHeight = imgData.height * scale;
           
-          // Center in quadrant
+          // Anchor at TOP-CENTER of quadrant
           const x = quad.left + (availWidth - finalWidth) / 2;
-          const y = quad.top + (availHeight - finalHeight) / 2;
+          const y = quad.top; // Top anchor instead of center
           
           layouts.push({
             src: imgData.src,
