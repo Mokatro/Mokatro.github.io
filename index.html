@@ -40,17 +40,17 @@
         <div class="absolute inset-0 bg-black opacity-20"></div>
         
         <!-- Highlights Container -->
-        <div id="hearthstone-highlights" class="absolute inset-0 pointer-events-none">
+        <div id="hearthstone-highlights" class="absolute inset-0 pointer-events-none z-[5]">
           <!-- Dynamically positioned highlights will be added here -->
         </div>
         
         <!-- Button Container - Centered with proper z-index -->
-        <div class="relative z-10 flex items-center justify-center px-4 py-8">
+        <div class="relative flex items-center justify-center px-4 py-8">
           <div id="hearthstone-button-wrapper" class="relative flex items-center justify-center group">
-            <div class="absolute w-[90vw] max-w-[400px] aspect-[5/3] md:w-[500px] md:aspect-[10/7] rounded-full transition-all duration-300 group-hover:scale-110" 
+            <div class="absolute z-0 w-[90vw] max-w-[400px] aspect-[5/3] md:w-[500px] md:aspect-[10/7] rounded-full transition-all duration-300 group-hover:scale-110" 
                  style="background: radial-gradient(ellipse, rgba(251, 191, 36, 0.4) 0%, rgba(251, 146, 60, 0.3) 20%, rgba(251, 191, 36, 0.15) 40%, transparent 70%); filter: blur(2px);"></div>
             
-            <div class="absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-300 group-hover:opacity-150">
+            <div class="absolute z-0 inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-300 group-hover:opacity-150">
               <svg class="absolute animate-rotate-slow w-full h-full max-w-[400px] md:max-w-[500px]" viewBox="0 0 500 350">
                 <defs>
                   <radialGradient id="rayGlow1">
@@ -88,17 +88,17 @@
         <div class="absolute inset-0 bg-black opacity-20"></div>
         
         <!-- Highlights Container -->
-        <div id="tft-highlights" class="absolute inset-0 pointer-events-none">
+        <div id="tft-highlights" class="absolute inset-0 pointer-events-none z-[5]">
           <!-- Dynamically positioned highlights will be added here -->
         </div>
         
         <!-- Button Container - Centered with proper z-index -->
-        <div class="relative z-10 flex items-center justify-center px-4 py-8">
+        <div class="relative flex items-center justify-center px-4 py-8">
           <div id="tft-button-wrapper" class="relative flex items-center justify-center group">
-            <div class="absolute w-[90vw] max-w-[400px] aspect-[5/3] md:w-[500px] md:aspect-[10/7] rounded-full transition-all duration-300 group-hover:scale-110" 
+            <div class="absolute z-0 w-[90vw] max-w-[400px] aspect-[5/3] md:w-[500px] md:aspect-[10/7] rounded-full transition-all duration-300 group-hover:scale-110" 
                  style="background: radial-gradient(ellipse, rgba(34, 211, 238, 0.4) 0%, rgba(168, 85, 247, 0.3) 20%, rgba(34, 211, 238, 0.15) 40%, transparent 70%); filter: blur(2px);"></div>
             
-            <div class="absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-300 group-hover:opacity-150">
+            <div class="absolute z-0 inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-300 group-hover:opacity-150">
               <svg class="absolute animate-rotate-slow w-full h-full max-w-[400px] md:max-w-[500px]" viewBox="0 0 500 350">
                 <defs>
                   <radialGradient id="rayGlow3">
@@ -242,45 +242,51 @@
         if (isMobile) {
           // Mobile: 2 sections (top and bottom), full width
           quadrants = [
-            { // Top section - full width
+            { // Top section - full width, anchor to bottom
               left: edgePadding,
               top: edgePadding,
               right: containerRect.width - edgePadding,
-              bottom: buttonCenterY - verticalGap
+              bottom: buttonCenterY - verticalGap,
+              anchorBottom: true
             },
-            { // Bottom section - full width
+            { // Bottom section - full width, anchor to top
               left: edgePadding,
               top: buttonCenterY + verticalGap,
               right: containerRect.width - edgePadding,
-              bottom: containerRect.height - edgePadding
+              bottom: containerRect.height - edgePadding,
+              anchorBottom: false
             }
           ];
         } else {
           // Desktop: 4 quadrants
           quadrants = [
-            { // Top-left
+            { // Top-left - anchor to bottom
               left: edgePadding,
               top: edgePadding,
               right: buttonCenterX - horizontalGap,
-              bottom: buttonCenterY - verticalGap
+              bottom: buttonCenterY - verticalGap,
+              anchorBottom: true
             },
-            { // Bottom-left
+            { // Bottom-left - anchor to top
               left: edgePadding,
               top: buttonCenterY + verticalGap,
               right: buttonCenterX - horizontalGap,
-              bottom: containerRect.height - edgePadding
+              bottom: containerRect.height - edgePadding,
+              anchorBottom: false
             },
-            { // Top-right
+            { // Top-right - anchor to bottom
               left: buttonCenterX + horizontalGap,
               top: edgePadding,
               right: containerRect.width - edgePadding,
-              bottom: buttonCenterY - verticalGap
+              bottom: buttonCenterY - verticalGap,
+              anchorBottom: true
             },
-            { // Bottom-right
+            { // Bottom-right - anchor to top
               left: buttonCenterX + horizontalGap,
               top: buttonCenterY + verticalGap,
               right: containerRect.width - edgePadding,
-              bottom: containerRect.height - edgePadding
+              bottom: containerRect.height - edgePadding,
+              anchorBottom: false
             }
           ];
         }
@@ -305,9 +311,16 @@
           let finalWidth = imgData.width * scale;
           let finalHeight = imgData.height * scale;
           
-          // Anchor at TOP-CENTER of quadrant
-          const x = quad.left + (availWidth - finalWidth) / 2;
-          const y = quad.top; // Top anchor instead of center
+          // Anchor based on quadrant position - toward button
+          const x = quad.left + (availWidth - finalWidth) / 2; // Always center horizontally
+          let y;
+          if (quad.anchorBottom) {
+            // Top quadrants: anchor to bottom (close to button)
+            y = quad.bottom - finalHeight;
+          } else {
+            // Bottom quadrants: anchor to top (close to button)
+            y = quad.top;
+          }
           
           layouts.push({
             src: imgData.src,
