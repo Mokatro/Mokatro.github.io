@@ -27,6 +27,32 @@
     #thumbnail-strip {
       scroll-behavior: smooth;
     }
+    
+    /* Landscape mobile optimization */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+      }
+      
+      header h1, header h2 {
+        font-size: 0.75rem;
+      }
+      
+      header a {
+        font-size: 0.75rem;
+      }
+      
+      .carousel-container {
+        max-height: 60vh;
+      }
+      
+      footer {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+        font-size: 0.65rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -45,7 +71,7 @@
     <!-- Main Content -->
     <div class="max-w-[2000px] mx-auto px-3 md:px-8 py-4 md:py-6">
       <!-- Carousel Section -->
-      <div class="mb-4 md:mb-6">
+      <div class="mb-4 md:mb-6 carousel-container">
         <!-- Main Slide Display -->
         <div class="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg overflow-hidden shadow-2xl">
           <div class="relative aspect-video">
